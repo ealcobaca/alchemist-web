@@ -1,4 +1,5 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-{{bgcolor}} fixed-top">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-{{bgcolor}}">
   <a class="navbar-brand" style="cursor: pointer;">
     <i
       (click)="isCollapsed = !isCollapsed"
@@ -30,9 +31,9 @@
 </nav>
 
 
-<div id="my-sidebar" class="container-fluid h-100" style="padding-top: 70px;">
-  <div class="row h-100">
-    <div id="collapseBasic" [collapse]="isCollapsed" class="col-2 bg-dark">
+<div id="my-sidebar" style="overflow:hidden;height:100%;width:100%">
+  <div class="row justify-content-center" style="overflow:hidden;height:100%;width:100%">
+    <div id="collapseBasic" [collapse]="isCollapsed" class="col-2 bg-dark" style="overflow:hidden;height:100%;width:100%">
 
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark position-sticky">
 	<ul class="nav navbar-nav mr-auto flex-column">
@@ -49,36 +50,42 @@
 	    <hr>
 	  </li>
 
-	  <li class="nav-item">
-	    <a class="nav-link dropdown-toggle"
-	(click) = "isCollapsed_VisAna = !isCollapsed_VisAna"
-	[attr.aria-expanded]="!isCollapsed_VisAna"
-	aria-controls="collapse_VisAna"
- routerLink="/visual-analysis">
+	  <li>
+	    <a class="nav-link" routerLink="/visual-analysis">
 	      <i class="material-icons md-light md-24"> equalizer </i>
-	      Visual Analysis</a>
+	      Visual Analysis
+	    </a>
 	  </li>
-	  <div class="collapse" 
-	id="collapse_VisAna"
- [collapse]="isCollapsed_VisAna" >
- <div class="container">
-   <ul class="nav navbar-nav mr-auto flex-column">
-     <li class="nav-item">
-       <a class="nav-link" href="#">PCA</a>
-     </li>
-     <li class="nav-item">
-       <a class="nav-link" href="#">t-SNE</a>
-     </li>
-     <li class="nav-item">
-       <a class="nav-link" href="#">Scatter plot</a>
-     </li>
-     <li class="nav-item">
-       <a class="nav-link " href="#">...</a>
-     </li>
-   </ul>
- </div>
-	  </div>
-
+<!-- 	  <li class="nav&#45;item"> -->
+<!-- 	    <a class="nav&#45;link dropdown&#45;toggle" -->
+<!-- 	(click) = "isCollapsed_VisAna = !isCollapsed_VisAna" -->
+<!-- 	[attr.aria&#45;expanded]="!isCollapsed_VisAna" -->
+<!-- 	aria&#45;controls="collapse_VisAna" -->
+<!--  routerLink="/visual&#45;analysis"> -->
+<!-- 	      <i class="material&#45;icons md&#45;light md&#45;24"> equalizer </i> -->
+<!-- 	      Visual Analysis</a> -->
+<!-- 	  </li> -->
+<!-- 	  <div class="collapse"  -->
+<!-- 	id="collapse_VisAna" -->
+<!--  [collapse]="isCollapsed_VisAna" > -->
+<!--  <div class="container"> -->
+<!--    <ul class="nav navbar&#45;nav mr&#45;auto flex&#45;column"> -->
+<!--      <li class="nav&#45;item"> -->
+<!--        <a class="nav&#45;link" href="#">PCA</a> -->
+<!--      </li> -->
+<!--      <li class="nav&#45;item"> -->
+<!--        <a class="nav&#45;link" href="#">t&#45;SNE</a> -->
+<!--      </li> -->
+<!--      <li class="nav&#45;item"> -->
+<!--        <a class="nav&#45;link" href="#">Scatter plot</a> -->
+<!--      </li> -->
+<!--      <li class="nav&#45;item"> -->
+<!--        <a class="nav&#45;link " href="#">...</a> -->
+<!--      </li> -->
+<!--    </ul> -->
+<!--  </div> -->
+<!-- 	  </div> -->
+<!--  -->
 
 	  <li class="nav-item">
 	    <a class="nav-link" routerLink="/statistical-analysis">
@@ -122,7 +129,7 @@
 
 
     </div>
-    <div class="col" style="">
+    <div class="col-10 justify-content-center" style="overflow:hidden;height:100%;width:100%">
       <app-contents></app-contents>
     </div>
   </div>

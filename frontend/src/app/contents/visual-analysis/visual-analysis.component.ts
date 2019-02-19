@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VisualAnalysisComponent implements OnInit {
 
+  dash_app = 'http://127.0.0.1:8050/';
   constructor() { }
 
   ngOnInit() {
