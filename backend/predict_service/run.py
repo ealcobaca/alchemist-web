@@ -2,10 +2,54 @@ from flask import Flask
 from flask import request
 from flask import jsonify
 from flask_cors import CORS
+import re
+import numpy as np
+import pickle
+import sklearn
 
 
 app = Flask(__name__)
 CORS(app)
+
+ELEM_SEQ = ["Li", "Be", "B", "O", "Na", "Mg",
+            "Al", "Si", "P", "K", "Ca", "Sc",
+            "Ti", "V", "Cr", "Mn", "Fe", "Co",
+            "Ni", "Cu", "Zn", "Ga", "Ge", "As",
+            "Se", "Rb", "Sr", "Y", "Zr", "Nb",
+            "Mo", "Ru", "Rh", "Pd", "Ag", "Cd",
+            "In", "Sn", "Sb", "Te", "Cs", "Ba",
+            "La", "Ce", "Pr", "Nd", "Sm", "Eu",
+            "Gd", "Tb", "Dy", "Ho", "Er", "Tm",
+            "Yb", "Lu", "Hf", "Ta", "W", "Hg",
+            "Tl", "Pb", "Bi", "Th", "U"]
+
+ELEM_POS = {ELEM_SEQ[i]: i for i in range(0, len(ELEM_SEQ))}
+
+MODELS = {
+    "TG": {
+        "DT": pickle.load(open("models/dt_tg.model", "rb")),
+        "kNN": pickle.load(open("models/knn_tg.model", "rb")),
+        "MLP": pickle.load(open("models/mlp_tg.model", "rb")),
+        "RF": pickle.load(open("models/mlp_tg.model", "rb")),
+        "SVR": pickle.load(open("models/svr_tg.model", "rb"))
+    },
+    "TL": {
+        "DT": pickle.load(open("models/dt_tl.model", "rb")),
+        "kNN": pickle.load(open("models/knn_tl.model", "rb")),
+        "MLP": pickle.load(open("models/mlp_tl.model", "rb")),
+        "RF": pickle.load(open("models/mlp_tl.model", "rb")),
+        "SVR": pickle.load(open("models/svr_tl.model", "rb"))
+    },
+    "ND300": {
+        "DT": pickle.load(open("models/dt_n300.model", "rb")),
+        "kNN": pickle.load(open("models/knn_nd300.model", "rb")),
+        "MLP": pickle.load(open("models/mlp_nd300.model", "rb")),
+        "RF": pickle.load(open("models/mlp_nd300.model", "rb")),
+        "SVR": pickle.load(open("models/svr_nd300.model", "rb"))
+    }
+}
+GLASS_PROPERTY = ["ND300", "TG", "TL"]
+ML_ALGORITHM = ["DT", "kNN", "MLP", "RF", "SVR"]
 
 @app.route('/')
 def hello_world():
@@ -13,16 +57,23 @@ def hello_world():
 
 
 def valid_predict(formula, glass_property, ml_algorithm):
+    """TODO"""
     return True
 
 
 def predictors_info(error):
-    return jsonify(glass_property=["TG", "TL", "ND300"],
-                   ml_algorithm=["RF", "DT", "kNN"], error=error)
+    return jsonify(glass_property=GLASS_PROPERTY,
+                   ml_algorithm=ML_ALGORITHM, error=error)
 
 
 def predict(formula, glass_property, ml_algorithm):
-    return jsonify(teste="teste")
+    instance = to_numpy(compounddic2atomsfraction(
+        formula2composition(formula)))
+    value = MODELS[glass_property][ml_algorithm].predict(instance)
+    return jsonify({'formula': formula,
+                    'glass_property': glass_property,
+                    'ml_algorithm': ml_algorithm,
+                    'value': "{0:.4f}".format(value[0])})
 
 # def predict_(formula, glass_property, ml_algorithm):
 #     result = {"Li": 0.0, "Be": 0.0, "B": 0.0, "O": 0.0, "Na": 0.0, "": 0.0,
@@ -54,7 +105,7 @@ def predict_http():
         if valid_predict(formula,
                          glass_property,
                          ml_algorithm):
-            aux = predict_(formula, glass_property, ml_algorithm)
+            aux = predict(formula, glass_property, ml_algorithm)
             print(aux)
             return aux
         else:
@@ -67,3 +118,62 @@ def predict_http():
 @app.route('/predict_info')
 def summary():
     return predictors_info()
+
+
+def formula2composition(formula):
+    """
+    Transform formula to composition, should be simple formulas with integer numbers and no parentheses
+    Ex: Li2O --> {'Li': 2, 'O':1}
+    :param formula:
+    :return: dictionary
+    """
+    composition = {}
+    for e in re.findall(r'([A-Z][a-z]*)(\d*)', formula):
+        val = e[1]
+        if val == '':
+            val = 1
+        composition[e[0]] = int(val)
+    return composition
+
+
+def compounddic2atomsfraction(compounds):
+
+    def createNewDic(dic, multiplyby):
+        values = list(dic.values())
+        keys = dic.keys()
+        newValues = np.array(values)*multiplyby
+        newDic = dict(zip(keys, newValues))
+        return newDic
+
+    def composition2atoms(cstr):
+        lst = re.findall(r'([A-Z][a-z]?)(\d*\.?\d*)', cstr)
+        dic = {}
+        for i in lst:
+            if len(i[1]) > 0:
+                try:
+                    dic[i[0]] = int(i[1])
+                except ValueError:
+                    dic[i[0]] = float(i[1])
+            else:
+                dic[i[0]] = 1
+                return dic
+
+    dic = {}
+
+    for key in compounds.keys():
+        baseValue = compounds[key]
+        atoms = composition2atoms(key)
+        for a in atoms.keys():
+            dic[a] = dic.get(a, 0) + atoms[a]*baseValue
+
+    multiplyby = 1.0/np.sum(list(dic.values()))
+    atomsF = createNewDic(dic, multiplyby)
+
+    return atomsF
+
+def to_numpy(composition):
+    vector = np.zeros((1, len(ELEM_SEQ)))
+    for comp in composition:
+        vector[0, ELEM_POS[comp]] = composition[comp]
+
+    return vector
