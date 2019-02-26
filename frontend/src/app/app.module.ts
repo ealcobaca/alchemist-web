@@ -25,6 +25,7 @@ import { StatisticalAnalysisComponent } from './contents/statistical-analysis/st
 import { NotfoundComponent } from './notfound/notfound.component';
 import { PredictionComponent } from './contents/prediction/prediction.component';
 import {MatTableModule} from '@angular/material/table';
+import { ChangeDetectorRef } from '@angular/core';
 // import { MatPaginator } from '@angular/material';
 
 
@@ -51,7 +52,8 @@ import {MatTableModule} from '@angular/material/table';
     CollapseModule.forRoot(),
     BsDropdownModule.forRoot(),
     // MatPaginator,
-    MatTableModule,
+    MatTableModule
+    // ChangeDetectorRef
     // MatTableDataSource
   ],
   providers: [],

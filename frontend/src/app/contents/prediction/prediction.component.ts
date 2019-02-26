@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DashService } from '../../dash.service';
 import { PredConf } from '../../pred-conf';
 import { Pred, FormPred} from '../../atomos';
 import {MatTableModule} from '@angular/material/table';
+import {MatTable} from '@angular/material';
 // import {MatPaginator, MatTableDataSource} from '@angular/material';
 
 // export interface PeriodicElement {
@@ -47,7 +48,7 @@ export class PredictionComponent implements OnInit {
   // dataSource = ELEMENT_DATA;
   displayedColumns: string[] = ['formula', 'glass_property', 'ml_algorithm', 'value'];
   // dataSource = ELEMENT_DATA;
-
+  @ViewChild(MatTable) table: MatTable<any>;
 
   constructor(private dashService: DashService) { }
 
@@ -79,7 +80,9 @@ export class PredictionComponent implements OnInit {
     console.log(this.dataSource);
   }
 
- refresh(): void {
-   dataSource.renderRows()
+  refresh(): void {
+    // this.changeDetectorRef.detectChanges();
+    this.table.renderRows();
+   // dataSource.renderRows()
   }
 }
