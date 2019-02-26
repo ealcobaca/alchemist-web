@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule} from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,6 +23,10 @@ import { VisualAnalysisComponent } from './contents/visual-analysis/visual-analy
 import { StartComponent } from './contents/start/start.component';
 import { StatisticalAnalysisComponent } from './contents/statistical-analysis/statistical-analysis.component';
 import { NotfoundComponent } from './notfound/notfound.component';
+import { PredictionComponent } from './contents/prediction/prediction.component';
+import {MatTableModule} from '@angular/material/table';
+// import { MatPaginator } from '@angular/material';
+
 
 @NgModule({
   declarations: [
@@ -35,7 +39,8 @@ import { NotfoundComponent } from './notfound/notfound.component';
     VisualAnalysisComponent,
     StartComponent,
     StatisticalAnalysisComponent,
-    NotfoundComponent
+    NotfoundComponent,
+    PredictionComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,7 +49,10 @@ import { NotfoundComponent } from './notfound/notfound.component';
     HttpClientModule,
     AccordionModule.forRoot(),
     CollapseModule.forRoot(),
-    BsDropdownModule.forRoot()
+    BsDropdownModule.forRoot(),
+    // MatPaginator,
+    MatTableModule,
+    // MatTableDataSource
   ],
   providers: [],
   bootstrap: [AppComponent]
