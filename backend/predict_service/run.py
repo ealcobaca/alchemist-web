@@ -30,21 +30,21 @@ MODELS = {
         "DT": pickle.load(open("models/dt_tg.model", "rb")),
         "kNN": pickle.load(open("models/knn_tg.model", "rb")),
         "MLP": pickle.load(open("models/mlp_tg.model", "rb")),
-        "RF": pickle.load(open("models/mlp_tg.model", "rb")),
+        "RF": pickle.load(open("models/rf_tg.model", "rb")),
         "SVR": pickle.load(open("models/svr_tg.model", "rb"))
     },
     "TL": {
         "DT": pickle.load(open("models/dt_tl.model", "rb")),
         "kNN": pickle.load(open("models/knn_tl.model", "rb")),
         "MLP": pickle.load(open("models/mlp_tl.model", "rb")),
-        "RF": pickle.load(open("models/mlp_tl.model", "rb")),
+        "RF": pickle.load(open("models/rf_tl.model", "rb")),
         "SVR": pickle.load(open("models/svr_tl.model", "rb"))
     },
     "ND300": {
         "DT": pickle.load(open("models/dt_n300.model", "rb")),
         "kNN": pickle.load(open("models/knn_nd300.model", "rb")),
         "MLP": pickle.load(open("models/mlp_nd300.model", "rb")),
-        "RF": pickle.load(open("models/mlp_nd300.model", "rb")),
+        "RF": pickle.load(open("models/rf_nd300.model", "rb")),
         "SVR": pickle.load(open("models/svr_nd300.model", "rb"))
     }
 }
