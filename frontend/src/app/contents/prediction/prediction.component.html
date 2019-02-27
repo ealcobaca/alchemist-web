@@ -24,11 +24,15 @@
 		<!-- </div> -->
 		<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
 			<div class="btn-group mr-2" role="group" aria-label="First group">
-				<button type=button (click)="predict(formula.value, prop.value, ml.value);" class="btn btn-outline-primary">Predict</button>
+				<button type=button (click)="predict(formula.value, prop.value, ml.value);" class="btn btn-outline-danger">Predict</button>
 			</div>
-			<div *ngIf="dataSource.length > 0" class="btn-group" role="group" aria-label="Third group">
-				<button type=button (click)="refresh();" class="btn btn-outline-primary">Refrash Table</button>
+			<div *ngIf="dataSource.length > 0" class="btn-group mr-2" role="group" aria-label="">
+				<button type=button (click)="refresh();" class="btn btn-outline-primary">Refresh Table</button>
 			</div>
+			<div *ngIf="dataSource.length > 0" class="btn-group mr-2" role="group" aria-label="">
+				<button type=button (click)="clear();" class="btn btn-outline-primary">Clear Table</button>
+			</div>
+		<!-- </div> -->
 		</div>
 		<hr class="my-4">
 		<!-- </form> -->
