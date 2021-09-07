@@ -3,7 +3,7 @@
 Alchemist-Web
 =============
 
-A Web based plataform for Alchemist.
+A Web-based platform for Alchemist.
 
 The Alchemist uses a pool of optimization algorithms and machine learning models to search for viable glass compositions for a given glass
 transition temperature (Tg) value.
