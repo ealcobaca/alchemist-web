@@ -8,4 +8,4 @@ A Web based plataform for Alchemist.
 The Alchemist uses a pool of optimization algorithms and machine learning models to search for viable glass compositions for a given glass
 transition temperature (Tg) value.
 
-<img src="https://github.com/ealcobaca/alchemist-web/blob/master/frontend/src/assets/images/alchemist-example.png" alt="drawing" width="600"/>
+<img src="https://github.com/ealcobaca/alchemist-web/blob/master/frontend/src/assets/images/alchemist-example.png" alt="drawing"/>
